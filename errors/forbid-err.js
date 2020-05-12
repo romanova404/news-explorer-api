@@ -1,8 +1,8 @@
-class ForbidError extends Error {
+class ForbiddenError extends Error {
   constructor(message) {
     super(message);
     this.statusCode = 403;
   }
 }
 
-module.exports = ForbidError;
+module.exports = ForbiddenError;

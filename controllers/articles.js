@@ -1,7 +1,7 @@
 const articleModel = require('../models/article');
 const NotFoundError = require('../errors/not-found-err');
-const ForbidError = require('../errors/forbid-err');
-
+const ForbiddenError = require('../errors/forbid-err');
+const { ARTICLE_NOT_FOUND, DELETE_FORBIDDEN } = require('../config/constants');
 
 module.exports.createArticle = (req, res, next) => {
   const {
@@ -27,9 +27,9 @@ module.exports.deleteArticle = (req, res, next) => {
   articleModel.findById(articleId).select('+owner')
     .then((article) => {
       if (!article) {
-        throw new NotFoundError('Не сохранено статей с таким id');
+        throw new NotFoundError(ARTICLE_NOT_FOUND);
       } else if (!article.owner.equals(req.user._id)) {
-        throw new ForbidError('Невозможно удалить чужую сохраненную статью');
+        throw new ForbiddenError(DELETE_FORBIDDEN);
       } else {
         articleModel.findByIdAndRemove(articleId)
           .then(() => res.status(200).send({ data: article }))

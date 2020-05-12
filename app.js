@@ -9,21 +9,20 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 
+const mongoUrlDev = require('./config/devconfig');
 const limiter = require('./limiter');
 const routes = require('./routes');
-const { createUser, login } = require('./controllers/users');
-const { createUserCheck, loginCheck } = require('./modules/validation');
-
-const auth = require('./middlewares/auth');
+const { errorHandler } = require('./modules/errorhandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
 app.use(helmet());
 app.use(limiter);
-const { PORT = 3000, MONGO_URL } = process.env;
 
-mongoose.connect(MONGO_URL, {
+const { PORT = 3000, NODE_ENV, MONGO_URL } = process.env;
+
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : mongoUrlDev, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -35,19 +34,12 @@ app.use(cookieParser());
 
 app.use(requestLogger);
 
-app.post('/signup', createUserCheck, createUser);
-app.post('/signin', loginCheck, login);
-
-app.use(auth, routes);
+app.use(routes);
 
 app.use(errorLogger);
 
 app.use(errors());
-app.use((err, req, res, next) => { /* eslint-disable-line no-unused-vars */
-  const { statusCode = 500, message } = err;
-
-  res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
