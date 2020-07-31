@@ -3,13 +3,15 @@ require('dotenv').config({
 });
 
 const express = require('express');
+const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { celebrate } = require('celebrate');
 const { errors } = require('celebrate');
 
-const mongoUrlDev = require('./config/devconfig');
+const { mongoUrlDev } = require('./config/devconfig');
 const limiter = require('./limiter');
 const routes = require('./routes');
 const { errorHandler } = require('./modules/errorhandler');
@@ -29,8 +31,15 @@ mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : mongoUrlDev, {
   useUnifiedTopology: true,
 });
 
+// cors для работы с кроссерверными запросами
+const corsOptions = {
+  origin: 'https://romanova404.github.io/',
+  credentials: true,
+};
+
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors(corsOptions));
 
 app.use(requestLogger);
 

@@ -2,7 +2,7 @@ const routes = require('express').Router();
 
 const users = require('./users');
 const articles = require('./articles');
-const { createUser, login } = require('../controllers/users');
+const { createUser, login, logout } = require('../controllers/users');
 const { createUserCheck, loginCheck } = require('../modules/validation');
 const { auth } = require('../middlewares/auth');
 const NotFoundError = require('../errors/not-found-err');
@@ -10,6 +10,7 @@ const { NOT_FOUND } = require('../config/constants');
 
 routes.post('/signup', createUserCheck, createUser);
 routes.post('/signin', loginCheck, login);
+routes.post('/logout', logout);
 
 routes.use(auth);
 routes.use(users);

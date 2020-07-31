@@ -40,10 +40,29 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : jwtDev, { expiresIn: '7d' });
       res.cookie('jwt', token, {
+        domain: '',
         maxAge: 604800,
         httpOnly: true,
-        sameSite: true,
-        secure: true,
+        // sameSite: true, только если фронт и бек на одном домене
+        // secure: true, на всякий случай
+      });
+      res.send({ token });
+    })
+    .catch(next);
+};
+
+
+module.exports.logout = (req, res, next) => {
+  const { email, name } = req.body;
+  return userModel.findUserByCredentials(email, name)
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : jwtDev, { expiresIn: '-10s' });
+      res.cookie('jwt', token, {
+        domain: '',
+        maxAge: 0,
+        httpOnly: true,
+        // sameSite: true, только если фронт и бек на одном домене
+        // secure: true, на всякий случай
       });
       res.send({ token });
     })
