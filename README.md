@@ -1,9 +1,9 @@
-# https://romanova404.github.io/news-explorer-api/ v2.0.0
-Актуальная версия v2.0.0
+# https://romanova404.github.io/news-explorer-api/ v2.0.1
+Актуальная версия v2.0.1
 
 # Публичные адреса
 https://www.yandexstudyproject.design/api - домен
-84.201.149.226 - публичный IP-адрес
+84.201.169.212 - публичный IP-адрес
 
 ### Сборки(настройки можно посмотреть в package.json - "scripts")
 - dev = development для разработчиков (использующиеся статичные файлы сборки в папке public). 

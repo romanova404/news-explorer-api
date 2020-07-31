@@ -8,7 +8,6 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { celebrate } = require('celebrate');
 const { errors } = require('celebrate');
 
 const { mongoUrlDev } = require('./config/devconfig');
@@ -31,14 +30,18 @@ mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : mongoUrlDev, {
   useUnifiedTopology: true,
 });
 
-// cors для работы с кроссерверными запросами
+const corsList = ['https://romanova404.github.io/', 'http://localhost:8080'];
 const corsOptions = {
-  origin: 'https://romanova404.github.io/',
+  origin: corsList,
   credentials: true,
 };
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+app.options('*', cors(corsOptions), (req, res) => {
+  res.status(200).send('OK');
+});
 app.use(cors(corsOptions));
 
 app.use(requestLogger);

@@ -43,8 +43,8 @@ module.exports.login = (req, res, next) => {
         domain: '',
         maxAge: 604800,
         httpOnly: true,
-        // sameSite: true, только если фронт и бек на одном домене
-        // secure: true, на всякий случай
+        sameSite: true,
+        secure: true,
       });
       res.send({ token });
     })
@@ -61,8 +61,8 @@ module.exports.logout = (req, res, next) => {
         domain: '',
         maxAge: 0,
         httpOnly: true,
-        // sameSite: true, только если фронт и бек на одном домене
-        // secure: true, на всякий случай
+        sameSite: true,
+        secure: true,
       });
       res.send({ token });
     })
