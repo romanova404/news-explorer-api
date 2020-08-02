@@ -51,18 +51,11 @@ module.exports.login = (req, res, next) => {
 };
 
 
-module.exports.logout = (req, res, next) => {
-  const { email } = req.body;
-  return userModel.findUserByCredentials(email)
-    .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : jwtDev, { expiresIn: '-10s' });
-      res.cookie('jwt', token, {
-        domain: '',
-        maxAge: 0,
-        sameSite: true,
-        secure: true,
-      });
-      res.send({ token });
-    })
-    .catch(next);
+module.exports.logout = (req, res) => {
+  res.cookie('jwt', null, {
+    domain: '',
+    maxAge: 0,
+    sameSite: true,
+    secure: true,
+  });
 };
