@@ -34,7 +34,7 @@ const corsList = ['https://romanova404.github.io/', 'http://localhost:8080', 'ht
 const corsOptions = {
   origin: corsList,
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
   credentials: true,
 };
 
