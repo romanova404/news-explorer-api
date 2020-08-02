@@ -52,8 +52,8 @@ module.exports.login = (req, res, next) => {
 
 
 module.exports.logout = (req, res, next) => {
-  const { email, name } = req.body;
-  return userModel.findUserByCredentials(email, name)
+  const { email } = req.body;
+  return userModel.findUserByCredentials(email)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : jwtDev, { expiresIn: '-10s' });
       res.cookie('jwt', token, {
