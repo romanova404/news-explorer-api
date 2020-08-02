@@ -30,7 +30,7 @@ mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : mongoUrlDev, {
   useUnifiedTopology: true,
 });
 
-const corsList = ['https://romanova404.github.io/', 'http://localhost:8080', 'https://yandexstudyproject.design'];
+const corsList = ['https://romanova404.github.io/', 'http://localhost:8080', 'https://yandexstudyproject.design', 'https://www.yandexstudyproject.design'];
 const corsOptions = {
   origin: corsList,
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
