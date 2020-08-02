@@ -41,7 +41,7 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : jwtDev, { expiresIn: '7d' });
       res.cookie('jwt', token, {
         domain: '',
-        maxAge: 604800,
+        maxAge: 604800016,
         sameSite: true,
         secure: true,
       });
