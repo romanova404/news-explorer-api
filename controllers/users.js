@@ -42,7 +42,6 @@ module.exports.login = (req, res, next) => {
       res.cookie('jwt', token, {
         domain: '',
         maxAge: 604800,
-        httpOnly: true,
         sameSite: true,
         secure: true,
       });
@@ -60,7 +59,6 @@ module.exports.logout = (req, res, next) => {
       res.cookie('jwt', token, {
         domain: '',
         maxAge: 0,
-        httpOnly: true,
         sameSite: true,
         secure: true,
       });
