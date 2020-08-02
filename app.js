@@ -33,6 +33,8 @@ mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : mongoUrlDev, {
 const corsList = ['https://romanova404.github.io/', 'http://localhost:8080', 'https://yandexstudyproject.design'];
 const corsOptions = {
   origin: corsList,
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
 
