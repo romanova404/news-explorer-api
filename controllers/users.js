@@ -58,4 +58,5 @@ module.exports.logout = (req, res) => {
     sameSite: true,
     secure: true,
   });
+  res.send(null);
 };
